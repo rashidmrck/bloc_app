@@ -1,4 +1,4 @@
-import 'package:bloc_app/screen/home/home.dart';
+import 'package:bloc_app/screen/home/ui/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomeScreen());
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
+    );
   }
 }
