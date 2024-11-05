@@ -22,25 +22,51 @@ class HomeScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Home'),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  homeBloc.add(HomeWishlistButtonNavigateEvent());
-                },
-                icon: const Icon(Icons.favorite_border),
+        switch (state.runtimeType) {
+          case const (HomeLoadingState):
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          case const (HomeLoadedSuccessState):
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Home'),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      homeBloc.add(HomeWishlistButtonNavigateEvent());
+                    },
+                    icon: const Icon(Icons.favorite_border),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      homeBloc.add(HomeCartButtonNavigateEvent());
+                    },
+                    icon: const Icon(Icons.shopping_bag_outlined),
+                  ),
+                ],
               ),
-              IconButton(
-                onPressed: () {
-                  homeBloc.add(HomeCartButtonNavigateEvent());
+              body: ListView.builder(
+                itemBuilder: (context, index) {
+                  final product = (state).products[index];
+                  return ListTile(
+                    title: Text(product.name),
+                  );
                 },
-                icon: const Icon(Icons.shopping_bag_outlined),
+                itemCount: (state as HomeLoadedSuccessState).products.length,
               ),
-            ],
-          ),
-        );
+            );
+          case const (HomeErrorState):
+            return const Scaffold(
+              body: Center(child: Text('Error')),
+            );
+          default:
+            return const Scaffold(
+              body: Center(
+                child: Text('Unknown State'),
+              ),
+            );
+        }
       },
     );
   }
