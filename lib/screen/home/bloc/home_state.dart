@@ -5,7 +5,6 @@ abstract class HomeState {}
 
 abstract class HomeActionState extends HomeState {}
 
-
 class HomeInitial extends HomeState {}
 
 class HomeLoadedState extends HomeState {}
@@ -17,3 +16,7 @@ class HomeErrorState extends HomeLoadedState {}
 class HomeNavigateToWishlistPageActionState extends HomeActionState {}
 
 class HomeNavigateToCartPageActionState extends HomeActionState {}
+
+class HomeProductWishlistButtonClickedState extends HomeActionState {}
+
+class HomeProductCartButtonClickedState extends HomeActionState {}
